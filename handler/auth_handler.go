@@ -24,16 +24,16 @@ func (ctrl *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	isAuthenticated, err := ctrl.service.Login(user)
+	token, err := ctrl.service.Login(user)
 	if err != nil {
 		BadResponse(c, "server error", http.StatusInternalServerError)
 		return
 	}
 
-	if !isAuthenticated {
-		BadResponse(c, "unauthorized", http.StatusUnauthorized)
+	if token == "" {
+		BadResponse(c, "authentication failed", http.StatusUnauthorized)
 		return
 	}
 
-	GoodResponseWithData(c, "user authenticated", http.StatusOK, nil)
+	GoodResponseWithData(c, "user authenticated", http.StatusOK, token)
 }

@@ -14,7 +14,7 @@ type Repository struct {
 
 func NewRepository(db *gorm.DB, cacher database.Cacher, config config.Config, log *zap.Logger) Repository {
 	return Repository{
-		Auth: NewAuthRepository(db, cacher, config.AppSecret),
+		Auth: NewAuthRepository(cacher),
 		User: NewUserRepository(db),
 	}
 }
